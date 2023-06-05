@@ -15,7 +15,7 @@ import java.security.Principal;
 public class UserController {
 
     @GetMapping("/user")
-    public String userPage(@CurrentSecurityContext(expression = "authentication.principal") User principal, Model model) {
+    public String userPage(@CurrentSecurityContext(expression = "authentication.principal") Principal principal, Model model) {
         model.addAttribute("user", principal);
         return "user";
     }
