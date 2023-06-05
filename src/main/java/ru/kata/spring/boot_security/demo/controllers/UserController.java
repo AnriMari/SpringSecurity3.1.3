@@ -16,23 +16,7 @@ import java.security.Principal;
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-
-
-//    public User currentUserName(Principal principal){
-//        String username = principal.getName();
-//        User user = new User();
-//        if(null != username){
-//            user = userService.getUserByUsername(username);
-//        }
-//        return user;
-//}
     @GetMapping("/user")
     public User getCurrentUser(Principal principal) {
         return ((User) SecurityContextHolder.getContext()
