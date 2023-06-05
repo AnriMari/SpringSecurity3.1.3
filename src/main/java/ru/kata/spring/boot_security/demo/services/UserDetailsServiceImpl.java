@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserDetailsServiceImpl implements UserService, UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -58,35 +58,36 @@ public class UserDetailsServiceImpl implements UserService, UserDetailsService {
     }
 
 
-    @Transactional
-    @Override
-    public void addUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<User> getUsers() {
-        return userRepository.findAll();
-    }
-
-    @Transactional
-    @Override
-    public User getUser(Long id) {
-        return userRepository.getById(id);
-    }
-
-    @Transactional
-    @Override
-    public void updateUser(User user) {
-        userRepository.save(user);
-    }
-
-    @Transactional
-    @Override
-    public void deleteUser(Long id) {
-        if (userRepository.findById(id).isPresent()) {
-            userRepository.deleteById(id);
-        }
-}}
+//    @Transactional
+//    @Override
+//    public void addUser(User user) {
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        userRepository.save(user);
+//    }
+//
+//    @Transactional(readOnly = true)
+//    @Override
+//    public List<User> getUsers() {
+//        return userRepository.findAll();
+//    }
+//
+//    @Transactional
+//    @Override
+//    public User getUser(Long id) {
+//        return userRepository.getById(id);
+//    }
+//
+//    @Transactional
+//    @Override
+//    public void updateUser(User user) {
+//        userRepository.save(user);
+//    }
+//
+//    @Transactional
+//    @Override
+//    public void deleteUser(Long id) {
+//        if (userRepository.findById(id).isPresent()) {
+//            userRepository.deleteById(id);
+//        }
+//}
+}
