@@ -6,6 +6,11 @@
 <body>
 <h1>Welcome spring boot security page!</h1>
 
+
+<div sec:authorize="isAuthenticated()">
+    Authenticated as <span sec:authentication="name"></span></div>
+
+
 <form th:action="@{/logout}" th:method="post">
     <input type="submit" value="Logout">
 </form>
