@@ -11,16 +11,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
-public class AdminServiceImpl implements AdminService {
+public class RegistrationServiceImpl implements RegistrationService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder encoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AdminServiceImpl(UserRepository userRepository, PasswordEncoder encoder) {
+    public RegistrationServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.encoder = encoder;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+
+    @Transactional
+    public void userRegistration(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 
     @Override
@@ -32,7 +38,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional
     public void addUser(User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -68,7 +74,7 @@ public class AdminServiceImpl implements AdminService {
             editUser.setEmail(updatedUser.getEmail());
             editUser.setRoles(updatedUser.getRoles());
             if (!editUser.getPassword().equals(updatedUser.getPassword())) {
-                editUser.setPassword(encoder.encode(updatedUser.getPassword()));
+                editUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             }
             userRepository.save(editUser);
         }
