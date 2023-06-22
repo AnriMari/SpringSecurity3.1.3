@@ -3,10 +3,12 @@ package ru.kata.spring.boot_security.demo.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -66,13 +68,19 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void editUser(Long id, User updatedUser) {
+        Collection<Role> roles = updatedUser.getRoles();
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {
             User editUser = optionalUser.get();
             editUser.setId(updatedUser.getId());
+            editUser.setName(updatedUser.getName());
+            editUser.setLastName(updatedUser.getLastName());
+            editUser.setAge(updatedUser.getAge());
             editUser.setUsername(updatedUser.getUsername());
-            editUser.setEmail(updatedUser.getEmail());
-            editUser.setRoles(updatedUser.getRoles());
+            if(roles == null){
+            } else {
+                editUser.setRoles(updatedUser.getRoles());
+            }
             if (!editUser.getPassword().equals(updatedUser.getPassword())) {
                 editUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
             }

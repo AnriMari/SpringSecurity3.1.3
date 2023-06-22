@@ -16,17 +16,19 @@ import java.security.Principal;
 @RequestMapping("/user")
 public class UserController {
 
+    private final UserService userService;
 
-    @GetMapping("/user")
-    public User getCurrentUser(Principal principal) {
-        return ((User) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal());
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
-//    @GetMapping("/user")
-//    public User currentUserName(Principal principal) {
-//        return (User) principal;
-//    }
+
+    @GetMapping()
+    public String userPage(Model model, Principal principal) {
+        User princ = userService.getUserByUsername(principal.getName());
+        model.addAttribute("princ", princ);
+        model.addAttribute("users", userService.showAllUsers());
+        return "user";}
 }
 
